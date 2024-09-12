@@ -36,6 +36,10 @@ android {
 }
 
 dependencies {
+    val lifecycle_version = "2.8.5"
+    val arch_version = "2.2.0"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
