@@ -8,14 +8,14 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.testflow.feature1.model.Image
 import com.example.testflow.feature1.repository.PhotoPickerRepository
 import com.example.testflow.feature1.repository.impl.PhotoPickerRepositoryImpl
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class PhotoPickerViewModel(
     photoPickerRepository: PhotoPickerRepository
 ) : ViewModel() {
 
-    var images = flow<List<Image>> {}
+    var images: Flow<List<Image>>? = null
 
     init {
         viewModelScope.launch {

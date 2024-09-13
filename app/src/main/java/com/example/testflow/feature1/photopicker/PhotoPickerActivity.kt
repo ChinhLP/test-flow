@@ -12,13 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.testflow.R
 import com.example.testflow.databinding.ActivityPhotoPickerBinding
 import com.example.testflow.feature1.adapter.PhotoAdapter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.withContext
 
 class PhotoPickerActivity : AppCompatActivity() {
 
@@ -40,13 +36,13 @@ class PhotoPickerActivity : AppCompatActivity() {
         binding.rvPhoto.adapter = adapter
 
         viewModel.images
-            .onEach {
+            ?.onEach {
                 Log.d("PhotoPickerRepository", "${Thread.currentThread()}")
                 adapter.addPhotos(it)
             }
-            .distinctUntilChanged()
-            .flowWithLifecycle(lifecycle)
-            .launchIn(lifecycleScope)
+            ?.distinctUntilChanged()
+            ?.flowWithLifecycle(lifecycle)
+            ?.launchIn(lifecycleScope)
     }
 
 }
