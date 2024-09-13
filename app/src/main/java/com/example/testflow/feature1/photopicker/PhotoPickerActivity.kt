@@ -1,7 +1,6 @@
 package com.example.testflow.feature1.photopicker
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import com.example.testflow.R
 import com.example.testflow.databinding.ActivityPhotoPickerBinding
 import com.example.testflow.feature1.adapter.PhotoAdapter
-import com.example.testflow.feature1.model.Image
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 
 class PhotoPickerActivity : AppCompatActivity() {
 
@@ -39,8 +40,11 @@ class PhotoPickerActivity : AppCompatActivity() {
 
         viewModel.images.onEach {
             delay(1000)
-            adapter.addPhotos(it)
+            withContext(Dispatchers.Main) {
+                adapter.addPhotos(it)
+            }
         }
+            .flowOn(Dispatchers.IO)
             .distinctUntilChanged()
             .flowWithLifecycle(lifecycle)
             .launchIn(lifecycleScope)

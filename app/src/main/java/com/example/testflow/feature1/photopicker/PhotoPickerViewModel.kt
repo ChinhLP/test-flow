@@ -9,6 +9,7 @@ import com.example.testflow.feature1.model.Image
 import com.example.testflow.feature1.repository.PhotoPickerRepository
 import com.example.testflow.feature1.repository.impl.PhotoPickerRepositoryImpl
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
@@ -16,11 +17,11 @@ class PhotoPickerViewModel(
     photoPickerRepository: PhotoPickerRepository
 ) : ViewModel() {
 
-    var images = flow<List<Image>>{}
+    var images = flow<List<Image>> {}
 
     init {
         viewModelScope.launch {
-             images = photoPickerRepository.getImagesInFolder(null)
+            images = photoPickerRepository.getImagesInFolder(null)
         }
     }
 
