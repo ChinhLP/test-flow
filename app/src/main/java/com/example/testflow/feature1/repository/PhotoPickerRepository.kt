@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface PhotoPickerRepository {
     @WorkerThread
-    fun getImagesInFolder(bucketId: Int?, emitItemCount: Int = 50): Flow<List<Image>>
+    fun getImagesInFolder(bucketId: Int?, emitItemCount: Int = 40): Flow<List<Image>>
 }
