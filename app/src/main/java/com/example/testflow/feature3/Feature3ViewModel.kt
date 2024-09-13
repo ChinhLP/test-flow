@@ -6,6 +6,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class Feature3ViewModel() : ViewModel() {
@@ -21,9 +22,9 @@ class Feature3ViewModel() : ViewModel() {
 
     private fun loop() {
         job = viewModelScope.launch {
-            for (i in 0..1000) {
+            repeat(5000) {
                 delay(500)
-                _flow3.value = i
+                _flow3.value = it
             }
         }
     }
