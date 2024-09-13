@@ -10,7 +10,9 @@ import androidx.annotation.WorkerThread
 import com.example.testflow.feature1.model.Image
 import com.example.testflow.feature1.repository.PhotoPickerRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.io.File
@@ -61,7 +63,7 @@ class PhotoPickerRepositoryImpl(private val context: Context) : PhotoPickerRepos
             selectionArgs,
             sortOrder
         )
-        return flow {
+        return flow<List<Image>> {
             cursor?.use {
                 val idColumnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
                 val pathColumnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
@@ -76,15 +78,18 @@ class PhotoPickerRepositoryImpl(private val context: Context) : PhotoPickerRepos
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         id.toString()
                     )
-                    imageList.add(Image(id, imageUri, path)) // them anh vao list
+                    imageList.add(Image(id, imageUri, path))
+
                     if (imageList.size == emitItemCount) {
-                        emit(imageList)
-                        imageList.clear()
+                        emit(imageList.toList())
+                        imageList.clear() // clear after emit
                     }
                 }
-                if (imageList.isNotEmpty()) { // emit not anh trong imagelist khi duyet het trong store
-                    emit(imageList)
-                    Log.d("djjdjd", "getImagesInFolder: ${imageList.size}")
+
+                // Phát dữ liệu lần cuối cùng nếu còn sót ảnh sau khi duyệt hết cursor
+                if (imageList.isNotEmpty()) {
+                    Log.d("PhotoPickerRepository", "dd${Thread.currentThread()}")
+                    emit(imageList.toList())
                     imageList.clear()
                 }
             }

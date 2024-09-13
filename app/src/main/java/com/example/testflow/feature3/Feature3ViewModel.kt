@@ -20,11 +20,18 @@ class Feature3ViewModel() : ViewModel() {
         loop()
     }
 
+//    fun foo() = flow {
+//        repeat(5000) {
+//            delay(500)
+//            emit(it)
+//        }
+//    }
+
     private fun loop() {
         job = viewModelScope.launch {
-            repeat(5000) {
+            for (i in 0..1000) {
                 delay(500)
-                _flow3.value = it
+                _flow3.value = i
             }
         }
     }

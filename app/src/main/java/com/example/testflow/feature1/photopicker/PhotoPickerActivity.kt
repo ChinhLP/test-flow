@@ -1,6 +1,7 @@
 package com.example.testflow.feature1.photopicker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -38,13 +39,14 @@ class PhotoPickerActivity : AppCompatActivity() {
         val adapter = PhotoAdapter()
         binding.rvPhoto.adapter = adapter
 
-        viewModel.images.onEach {
-            adapter.addPhotos(it)
+        viewModel.images
+            .onEach {
+                Log.d("PhotoPickerRepository", "${Thread.currentThread()}")
+                adapter.addPhotos(it)
         }
             .distinctUntilChanged()
             .flowWithLifecycle(lifecycle)
             .launchIn(lifecycleScope)
-
     }
 
 }
