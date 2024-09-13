@@ -39,10 +39,10 @@ class PhotoPickerActivity : AppCompatActivity() {
         binding.rvPhoto.adapter = adapter
 
         viewModel.images.onEach {
-            delay(1000)
             withContext(Dispatchers.Main) {
                 adapter.addPhotos(it)
             }
+            delay(1000)
         }
             .flowOn(Dispatchers.IO)
             .distinctUntilChanged()
