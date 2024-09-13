@@ -11,17 +11,19 @@ import com.example.testflow.feature1.repository.impl.PhotoPickerRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class PhotoPickerViewModel(
     photoPickerRepository: PhotoPickerRepository
 ) : ViewModel() {
 
-    var images = flow<List<Image>> {}
+    var images = flow<List<Image>> {}.flowOn(Dispatchers.IO)
 
     init {
         viewModelScope.launch {
             images = photoPickerRepository.getImagesInFolder(null)
+            delay(1000)
         }
     }
 
