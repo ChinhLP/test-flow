@@ -43,7 +43,7 @@ class PhotoPickerActivity : AppCompatActivity() {
             .onEach {
                 Log.d("PhotoPickerRepository", "${Thread.currentThread()}")
                 adapter.addPhotos(it)
-        }
+            }
             .distinctUntilChanged()
             .flowWithLifecycle(lifecycle)
             .launchIn(lifecycleScope)

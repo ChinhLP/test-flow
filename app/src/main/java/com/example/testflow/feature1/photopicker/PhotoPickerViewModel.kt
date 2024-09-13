@@ -1,6 +1,5 @@
 package com.example.testflow.feature1.photopicker
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -9,26 +8,18 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.testflow.feature1.model.Image
 import com.example.testflow.feature1.repository.PhotoPickerRepository
 import com.example.testflow.feature1.repository.impl.PhotoPickerRepositoryImpl
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
 class PhotoPickerViewModel(
     photoPickerRepository: PhotoPickerRepository
 ) : ViewModel() {
 
-    var images = flow<List<Image>> {}.flowOn(Dispatchers.IO)
+    var images = flow<List<Image>> {}
 
     init {
         viewModelScope.launch {
             images = photoPickerRepository.getImagesInFolder(null)
-            images.onEach {
-                delay(1000)
-            }
         }
     }
 

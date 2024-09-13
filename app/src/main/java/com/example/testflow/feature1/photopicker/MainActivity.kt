@@ -43,27 +43,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
         findViewById<Button>(R.id.btnFeature2).setOnClickListener {
-                openFeature2Activity()
+            openFeature2Activity()
 
         }
         findViewById<Button>(R.id.btnFeature3).setOnClickListener {
-                openFeature3Activity()
+            openFeature3Activity()
 
         }
         findViewById<Button>(R.id.btnFeature4).setOnClickListener {
-                openFeature4Activity()
+            openFeature4Activity()
         }
     }
 
     private fun openPickerActivity() {
         startActivity(Intent(this, PhotoPickerActivity::class.java))
     }
+
     private fun openFeature2Activity() {
         startActivity(Intent(this, Feature2SendActivity::class.java))
     }
+
     private fun openFeature3Activity() {
         startActivity(Intent(this, Feature3Activity::class.java))
     }
+
     private fun openFeature4Activity() {
         startActivity(Intent(this, Feature4Activity::class.java))
     }
