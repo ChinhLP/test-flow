@@ -13,6 +13,7 @@ import com.example.testflow.R
 import com.example.testflow.databinding.ActivityPhotoPickerBinding
 import com.example.testflow.feature1.adapter.PhotoAdapter
 import com.example.testflow.feature1.model.Image
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -37,7 +38,7 @@ class PhotoPickerActivity : AppCompatActivity() {
         binding.rvPhoto.adapter = adapter
 
         viewModel.images.onEach {
-            Log.d("hahaha", "onCreate: ${it.size}")
+            delay(1000)
             adapter.addPhotos(it)
         }
             .distinctUntilChanged()

@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.example.testflow.feature1.model.Image
 import com.example.testflow.feature1.repository.PhotoPickerRepository
@@ -83,6 +84,7 @@ class PhotoPickerRepositoryImpl(private val context: Context) : PhotoPickerRepos
                 }
                 if (imageList.isNotEmpty()) { // emit not anh trong imagelist khi duyet het trong store
                     emit(imageList)
+                    Log.d("djjdjd", "getImagesInFolder: ${imageList.size}")
                     imageList.clear()
                 }
             }
