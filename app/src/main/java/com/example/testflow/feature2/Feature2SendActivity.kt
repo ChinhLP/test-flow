@@ -12,7 +12,7 @@ class Feature2SendActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_feature_2)
         val button = findViewById<Button>(R.id.next)
         val listItem = mutableListOf<Int>()
         for (i in 1..10) {

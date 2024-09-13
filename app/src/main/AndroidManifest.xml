@@ -21,12 +21,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestFlow"
         tools:targetApi="31">
+        <activity android:name=".feature4.Feature4Activity"
+            android:exported="false"/>
+        <activity android:name=".feature3.Feature3Activity"
+            android:exported="false"/>
+
+        <activity android:name=".feature1.photopicker.PhotoPickerActivity"
+            android:exported="false"/>
+
+        <activity android:name=".feature2.Feature2SendActivity"
+            android:exported="false"/>
 
         <activity android:name=".feature2.Feature2ReceiveActivity"
             android:exported="false"/>
 
         <activity
-            android:name=".feature2.Feature2SendActivity"
+            android:name=".feature1.photopicker.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,10 +1,8 @@
 package com.example.testflow.feature2
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +22,7 @@ class Feature2ReceiveActivity : AppCompatActivity() {
                 listView.adapter =
                     ArrayAdapter(
                         this,
-                        R.layout.layout_item_pick_photo,
+                        R.layout.layout_item_feature_2,
                         R.id.text,
                         list.map { it.toString() })
             }
