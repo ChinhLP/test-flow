@@ -3,22 +3,27 @@ package com.example.testflow.feature2
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class Feature2ViewModel() : ViewModel() {
 
-    companion object {
-        private val _flow2 = MutableStateFlow<MutableList<Int>>(mutableListOf())
-        var flow2 = _flow2.asStateFlow()
+
+    private val _flow2 = MutableSharedFlow<Int>(replay = 10)
+    var flow2 = _flow2.asSharedFlow()
+
+
+    fun sendItem(item: Int) {
+        viewModelScope.launch {
+            _flow2.emit(item)
+        }
     }
 
-
-    fun sendItem(listItem: MutableList<Int>) {
-        viewModelScope.launch {
-            _flow2.value = listItem
+    companion object ViewModelSingleton {
+        val instance: Feature2ViewModel by lazy {
+            Feature2ViewModel()
         }
+
     }
 }
 

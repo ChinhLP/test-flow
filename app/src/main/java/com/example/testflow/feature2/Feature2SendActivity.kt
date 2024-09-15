@@ -5,20 +5,22 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.testflow.R
 
 class Feature2SendActivity : AppCompatActivity() {
-    private val viewmodel: Feature2ViewModel by viewModels()
+    private lateinit var viewModel: Feature2ViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feature_2)
+        viewModel = Feature2ViewModel.instance
+
         val button = findViewById<Button>(R.id.next)
-        val listItem = mutableListOf<Int>()
         for (i in 1..10) {
-            listItem.add(i)
+            viewModel.sendItem(i)
         }
-        viewmodel.sendItem(listItem)
         button.setOnClickListener {
             val intent = Intent(this, Feature2ReceiveActivity::class.java)
             startActivity(intent)
