@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
@@ -41,10 +42,10 @@ class Feature3Activity : AppCompatActivity() {
             viewModel.foo()
                 .filterNotNull() // chỉ chạy khi value not null
                 .distinctUntilChanged() // chỉ chạy khi value thay đổi
-                .transform {
+                .map {
                     // thiết lập giá trị trước khi emit
                     delay(1000)
-                    emit(it)
+                    it
                 }
                 .take(8) // chỉ lấy 8  giá trị emit
                 .onCompletion {

@@ -29,7 +29,7 @@ class Feature4Activity : AppCompatActivity() {
         // in ra giá trị khi 1 trong 2 emit
         viewModel.flow1.combine(viewModel.flow2) { flow1, flow2 ->
             if (flow1 != null && flow2 != null) {
-//                println("flow1: $flow1, flow2: $flow2")
+                println("flow1: $flow1, flow2: $flow2")
             }
         }
             .filterNotNull()
@@ -42,7 +42,7 @@ class Feature4Activity : AppCompatActivity() {
         // lệnh zip là kết hợp 2 flow lại với nhau và 2 flow sẽ đợi nhau emit
         viewModel.flow1
             .filterNotNull()
-            .zip(viewModel.flow2) { value1, value2 ->
+            .zip(viewModel.flow2.filterNotNull()) { value1, value2 ->
                 // Kết hợp các giá trị của hai flow vào một chuỗi
                 "Flow1: $value1, Flow2: $value2"
             }
