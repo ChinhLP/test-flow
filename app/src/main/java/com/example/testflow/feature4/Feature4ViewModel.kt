@@ -1,10 +1,12 @@
 package com.example.testflow.feature4
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -24,6 +26,12 @@ class Feature4ViewModel : ViewModel() {
             for (i in 0 until 10) {
                 delay(timeDelay)
                 flow.value = i
+                if(flow == _flow1){
+                    Log.d("jj", "_flow1 ${i}")
+                } else {
+                    Log.d("jj", "_flow2 ${i}")
+                }
+
             }
         }
     }

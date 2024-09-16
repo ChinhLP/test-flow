@@ -1,5 +1,6 @@
 package com.example.testflow.feature3
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
@@ -15,23 +16,21 @@ class Feature3ViewModel() : ViewModel() {
 
     var job: Job? = null
 
-
     init {
         loop()
     }
 
-//    fun foo() = flow {
-//        repeat(5000) {
-//            delay(500)
-//            emit(it)
-//        }
-//    }
+    fun foo() = flow {
+        repeat(100) {
+            delay(100)
+            emit(it)
+        }
+    }
 
     private fun loop() {
         job = viewModelScope.launch {
-            for (i in 0..1000) {
-                delay(500)
-                _flow3.value = i
+            foo().collect{ value ->
+                _flow3.value = value
             }
         }
     }

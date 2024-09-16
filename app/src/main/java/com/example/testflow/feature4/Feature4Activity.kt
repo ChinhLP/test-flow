@@ -1,6 +1,7 @@
 package com.example.testflow.feature4
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
@@ -27,7 +28,7 @@ class Feature4Activity : AppCompatActivity() {
         // in ra giá trị khi 1 trong 2 emit
         viewModel.flow1.combine(viewModel.flow2) { flow1, flow2 ->
             if (flow1 != null && flow2 != null) {
-                println("flow1: $flow1, flow2: $flow2")
+//                println("flow1: $flow1, flow2: $flow2")
             }
         }
             .filterNotNull()
@@ -38,12 +39,12 @@ class Feature4Activity : AppCompatActivity() {
 
     private fun zipFlow() {
         // lệnh zip là kết hợp 2 flow lại với nhau và 2 flow sẽ đợi nhau emit
-        viewModel.flow1.zip(viewModel.flow2) { flow1, flow2 ->
-            if (flow1 != null && flow2 != null) {
-                println("flow1: $flow1, flow2: $flow2")
-            }
-        }
+        viewModel.flow1
             .filterNotNull()
+            .zip(viewModel.flow2.filterNotNull()) { flow1, flow2 ->
+                println("zip flow1: $flow1, flow2: $flow2")
+
+            }
             .distinctUntilChanged()
             .flowWithLifecycle(lifecycle)
             .launchIn(lifecycleScope)
