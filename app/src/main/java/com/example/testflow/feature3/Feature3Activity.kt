@@ -23,7 +23,9 @@ import kotlinx.coroutines.launch
 
 class Feature3Activity : AppCompatActivity() {
     private val viewModel: Feature3ViewModel by viewModels()
-    private var job: Job? = null
+    private var job1: Job? = null
+    private var job2: Job? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,39 +37,40 @@ class Feature3Activity : AppCompatActivity() {
     }
 
     private fun task125() {
-        viewModel.flow3
-            .filterNotNull() // chỉ chạy khi value not null
-            .distinctUntilChanged() // chỉ chạy khi value thay đổi
-            .transform {
-                // thiết lập giá trị trước khi emit
-                delay(1000)
-                emit(it)
-            }
-            .onEach {
-                // thực hiện action mà không thay đổi đến giá trị
-                Log.d("ChatActivity", "$it")
-            }
-            .take(8) // chỉ lấy 8  giá trị emit
-            .onCompletion {
-                // thực hiện đóng job khi flow kết thúc
-                viewModel.job?.cancel()
-            }
-            .flowOn(Dispatchers.IO) // gán luồng flow lên IO
-            .flowWithLifecycle(lifecycle) // theo dõi trạng thái lifecycle
-            .launchIn(lifecycleScope) // thu thập giá trị trả ra khai báo thay collect
+        job2 = lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.foo()
+                .filterNotNull() // chỉ chạy khi value not null
+                .distinctUntilChanged() // chỉ chạy khi value thay đổi
+                .transform {
+                    // thiết lập giá trị trước khi emit
+                    delay(1000)
+                    emit(it)
+                }
+                .take(8) // chỉ lấy 8  giá trị emit
+                .onCompletion {
+                    // thực hiện đóng job khi flow kết thúc
+                    job2?.cancel()
+                }
+                .collect {
+                    // thực hiện action mà không thay đổi đến giá trị
+                    Log.d("hhh", "$it")
+                }
+
+        }
+
     }
+
     private fun task345() {
-        viewModel.flow3
-            .filterNotNull()
-            .filter {
-                // chỉ lấy giá trị lẻ
-                it % 2 != 0
-            }
-            .onEach {
-                Log.d("ddd", "$it")
-            }
-            .flowOn(Dispatchers.IO)
-            .flowWithLifecycle(lifecycle)
-            .launchIn(lifecycleScope)
+        job1 = lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.foo()
+                .filterNotNull()
+                .filter {
+                    // chỉ lấy giá trị lẻ
+                    it % 2 != 0
+                }
+                .collect {
+                    Log.d("ChatActivity", "$it")
+                }
+        }
     }
 }

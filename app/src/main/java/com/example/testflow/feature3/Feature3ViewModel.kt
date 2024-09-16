@@ -16,10 +16,6 @@ class Feature3ViewModel() : ViewModel() {
 
     var job: Job? = null
 
-    init {
-        loop()
-    }
-
     fun foo() = flow {
         repeat(100) {
             delay(100)
@@ -27,11 +23,4 @@ class Feature3ViewModel() : ViewModel() {
         }
     }
 
-    private fun loop() {
-        job = viewModelScope.launch {
-            foo().collect{ value ->
-                _flow3.value = value
-            }
-        }
-    }
 }

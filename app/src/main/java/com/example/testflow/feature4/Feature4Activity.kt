@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.zip
 
 class Feature4Activity : AppCompatActivity() {
@@ -41,12 +42,14 @@ class Feature4Activity : AppCompatActivity() {
         // lệnh zip là kết hợp 2 flow lại với nhau và 2 flow sẽ đợi nhau emit
         viewModel.flow1
             .filterNotNull()
-            .zip(viewModel.flow2.filterNotNull()) { flow1, flow2 ->
-                println("zip flow1: $flow1, flow2: $flow2")
-
+            .zip(viewModel.flow2) { value1, value2 ->
+                // Kết hợp các giá trị của hai flow vào một chuỗi
+                "Flow1: $value1, Flow2: $value2"
             }
-            .distinctUntilChanged()
             .flowWithLifecycle(lifecycle)
+            .onEach { zippedValue ->
+                Log.d("zipped", zippedValue)
+            }
             .launchIn(lifecycleScope)
     }
 }

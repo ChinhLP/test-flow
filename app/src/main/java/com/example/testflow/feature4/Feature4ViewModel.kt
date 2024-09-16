@@ -17,8 +17,9 @@ class Feature4ViewModel : ViewModel() {
     var flow2 = _flow2.asStateFlow()
 
     init {
-        loop(_flow1 , 1000)
         loop(_flow2,3000)
+        loop(_flow1 , 1000)
+
     }
 
     private fun loop ( flow: MutableStateFlow<Int?> , timeDelay: Long)  {
